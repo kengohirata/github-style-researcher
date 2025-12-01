@@ -22,8 +22,12 @@
                   </strong>
                 </h1>
                 {{ with .Params.authors }}
-                <div class="text-small text-gray-light">
-                  {{ delimit . ", " }}
+                {{ $firsts := $.Params.first_authors }}
+                <div class="text-small color-fg-default">
+                  {{ range $i, $a := . }}
+                    {{ if $i }}, {{ end }}
+                    {{ if and $firsts (in $firsts $a) }}<strong>{{ $a }}</strong>{{ else }}{{ $a }}{{ end }}
+                  {{ end }}
                 </div>
                 {{ end }}
                 <div class="note m-0">
