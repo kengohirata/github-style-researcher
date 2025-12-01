@@ -37,26 +37,27 @@
             </div>
             {{ $firsts := .Params.first_authors }}
             <div class="d-flex flex-justify-between flex-items-center">
-              {{ with .Params.authors }}
               <div class="color-fg-default">
-                {{ range $i, $a := . }}
-                  {{ if $i }}, {{ end }}
-                  {{ $short := $a }}
-                  {{ $parts := split $a " " }}
-                  {{ if ge (len $parts) 2 }}
-                    {{ $first := index $parts 0 }}{{ $last := index $parts (sub (len $parts) 1) }}
-                    {{ $short = printf "%s. %s" (substr $first 0 1) $last }}
+                {{ with .Params.authors }}
+                  {{ range $i, $a := . }}
+                    {{ if $i }}, {{ end }}
+                    {{ $short := $a }}{{ $parts := split $a " " }}
+                    {{ if ge (len $parts) 2 }}
+                      {{ $first := index $parts 0 }}{{ $last := index $parts (sub (len $parts) 1) }}
+                      {{ $short = printf "%s. %s" (substr $first 0 1) $last }}
+                    {{ end }}
+                    {{ if and $firsts (in $firsts $a) }}<strong>{{ $short }}</strong>{{ else }}{{ $short }}{{ end }}
                   {{ end }}
-                  {{ if and $firsts (in $firsts $a) }}<strong>{{ $short }}</strong>{{ else }}{{ $short }}{{ end }}
                 {{ end }}
               </div>
-              {{ end }}
               <div>
-                <div class="text-gray f3" style="min-width:25%;">
+                <div class="text-gray f3" style="min-width:35%;">
                   {{ $text := cond (ne .Summary "") (.Summary | safeHTML) .Title }}
                   {{ $link := "" }}
-                  {{ if .Params.published }}{{ $link = .Params.published }}{{ else if .Params.arxiv }}
-                  {{ $ax := .Params.arxiv }}{{ $link = cond (hasPrefix $ax "http") $ax (printf "https://arxiv.org/abs/%s" $ax) }}{{ end }}
+                  {{ if .Params.published }}{{ $link = .Params.published }}
+                  {{ else if .Params.arxiv }}{{ $ax := .Params.arxiv }}
+                    {{ $link = cond (hasPrefix $ax "http") $ax (printf "https://arxiv.org/abs/%s" $ax) }}
+                  {{ end }}
                   {{ if $link }}<a class="text-gray f3" href="{{ $link }}">{{ $text }}</a>{{ else }}{{ $text }}{{ end }}
                 </div>
               </div>
