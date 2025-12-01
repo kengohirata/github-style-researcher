@@ -30,40 +30,38 @@
         {{ range .Paginator.Pages }}
         <li class="col-12 d-flex width-full py-4 border-bottom color-border-secondary public source">
           <div class="col-12 d-inline-block">
-            <div class="d-inline-block mb-1">
+            <div class="d-inline-block">
               <h3 class="wb-break-all">
                 <a href="{{ .Permalink }}">{{ .Title }}</a>
               </h3>
             </div>
             {{ $firsts := .Params.first_authors }}
-            {{ with .Params.authors }}
-            <div class="color-fg-default mb-2">
-              {{ range $i, $a := . }}
-                {{ if $i }}, {{ end }}
-                {{ $short := $a }}
-                {{ $parts := split $a " " }}
-                {{ if ge (len $parts) 2 }}
-                  {{ $first := index $parts 0 }}{{ $last := index $parts (sub (len $parts) 1) }}
-                  {{ $short = printf "%s. %s" (substr $first 0 1) $last }}
+            <div class="d-flex flex-justify-between flex-items-center">
+              {{ with .Params.authors }}
+              <div class="color-fg-default">
+                {{ range $i, $a := . }}
+                  {{ if $i }}, {{ end }}
+                  {{ $short := $a }}
+                  {{ $parts := split $a " " }}
+                  {{ if ge (len $parts) 2 }}
+                    {{ $first := index $parts 0 }}{{ $last := index $parts (sub (len $parts) 1) }}
+                    {{ $short = printf "%s. %s" (substr $first 0 1) $last }}
+                  {{ end }}
+                  {{ if and $firsts (in $firsts $a) }}<strong>{{ $short }}</strong>{{ else }}{{ $short }}{{ end }}
                 {{ end }}
-                {{ if and $firsts (in $firsts $a) }}<strong>{{ $short }}</strong>{{ else }}{{ $short }}{{ end }}
+              </div>
               {{ end }}
-            </div>
-            {{ end }}
-            <div>
-              <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                {{ $text := cond (ne .Summary "") (.Summary | safeHTML) .Title }}
-                {{ $link := "" }}
-                {{ if .Params.published }}
-                  {{ $link = .Params.published }}
-                {{ else if .Params.arxiv }}
-                  {{ $ax := .Params.arxiv }}
-                  {{ $link = cond (hasPrefix $ax "http") $ax (printf "https://arxiv.org/abs/%s" $ax) }}
-                {{ end }}
-                {{ if $link }}<a class="text-gray" href="{{ $link }}">{{ $text }}</a>{{ else }}{{ $text }}{{ end }}
+              <div>
+                <div class="text-gray f3" style="min-width:25%;">
+                  {{ $text := cond (ne .Summary "") (.Summary | safeHTML) .Title }}
+                  {{ $link := "" }}
+                  {{ if .Params.published }}{{ $link = .Params.published }}{{ else if .Params.arxiv }}
+                  {{ $ax := .Params.arxiv }}{{ $link = cond (hasPrefix $ax "http") $ax (printf "https://arxiv.org/abs/%s" $ax) }}{{ end }}
+                  {{ if $link }}<a class="text-gray f3" href="{{ $link }}">{{ $text }}</a>{{ else }}{{ $text }}{{ end }}
+                </div>
               </div>
             </div>
-            <div class="f6 text-gray mt-2">
+            <div class="f6 text-gray mt-4">
               {{ with .Params.tags }}
               {{ range $tag := (first 5 .) }}
               <a class="muted-link mr-3" href="{{ printf "tags/%s" (urlize .) | relURL }}">
@@ -74,9 +72,7 @@
                 </svg>
                 {{ $tag }}
               </a>
-              {{ end }}
-              {{ end }}
-
+              {{ end }}{{ end }}
               Published
               <relative-time datetime="{{ .PublishDate.Format " Mon, 02 Jan 2006 15:04:05 -0700" }}" class="no-wrap"
                 title="{{ .PublishDate.Format " Mon, 02 Jan 2006 15:04:05 -0700" }}">
