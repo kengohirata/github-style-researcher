@@ -81,7 +81,7 @@ function monthly(year, month, posts) {
       class="col-8 css-truncate css-truncate-target lh-condensed width-fit flex-auto min-width-0">
       <a href="${post.link}">${post.title}</a>
     </div>
-    <time  title="This post was made on ${months[post.date.getMonth()]} ${post.date.getDate()}"
+    <time  title="This paper was published on ${months[post.date.getMonth()]} ${post.date.getDate()}"
       class="col-2 text-right f6 text-gray-light pt-1">
       ${months[post.date.getMonth()]} ${post.date.getDate()}
     </time>
@@ -107,7 +107,7 @@ function monthly(year, month, posts) {
           <details class="Details-element details-reset" open>
             <summary role="button" class="btn-link f4 muted-link no-underline lh-condensed width-full">
               <span class="color-text-primary ws-normal text-left">
-                Created ${monthPosts.length} post${monthPosts.length > 1 ? 's' : ''}
+                Published ${monthPosts.length} paper${monthPosts.length > 1 ? 's' : ''}
               </span>
               <span class="d-inline-block float-right color-icon-secondary">
                 <span class="Details-content--open float-right">
@@ -156,7 +156,7 @@ function yearList() {
 }
 
 function graph(year, posts, startDate, endDate) {
-  const postsStr = posts.length === 1 ? "post" : "posts";
+  const postsStr = posts.length === 1 ? "paper" : "papers";
   if (year === now.getFullYear().toString()) {
     document.querySelector('#posts-count').innerText = `${posts.length}  ${postsStr} in the last year`;
   } else {

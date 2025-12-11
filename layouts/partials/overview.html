@@ -6,7 +6,7 @@
 {{ if ne (len $pinned) 0}}
 {{ else }}
 {{ $section = where .Site.RegularPages "Section" "in" (slice "post") }}
-{{ $section_title = "Popular posts" }}
+{{ $section_title = "Recent papers" }}
 {{ end }}
 <div>
   <div class="position-relative">
@@ -132,7 +132,7 @@
         </div>
 
         <h2 class="f4 text-normal mt-4 mb-3">
-          Post activity
+          Paper activity
         </h2>
 
         <div id="posts-activity">
