@@ -1,11 +1,16 @@
 {{ define "posts" }}
+{{ $pages := .Pages }}
+{{ if eq .Type "tags" }}
+{{ $pages = where .Pages "Section" "post" }}
+{{ end }}
+{{ $paginator := .Paginate $pages }}
 <div>
   <div class="position-relative">
     <div>
       {{ if eq .Type "tags" }}
       <div class="TableObject border-bottom border-gray-light py-3">
         <div class="user-repo-search-results-summary TableObject-item TableObject-item--primary v-align-top">
-          <strong>{{ len .Pages }}</strong>
+          <strong>{{ len $pages }}</strong>
           results
           for <strong>{{ .Title }}</strong>
         </div>
@@ -27,7 +32,7 @@
         {{end}}
       {{ end }}
       <ul>
-        {{ range .Paginator.Pages }}
+        {{ range $paginator.Pages }}
         <li class="col-12 d-flex width-full py-4 border-bottom color-border-secondary public source">
           <div class="col-12 d-inline-block">
             <div class="d-inline-block">
@@ -86,13 +91,13 @@
       </ul>
       <div class="paginate-container">
         <div class="BtnGroup">
-          {{ if .Paginator.HasPrev }}
-          <a rel="nofollow" class="btn btn-outline BtnGroup-item" href="{{ .Paginator.Prev.URL }}">Previous</a>
+          {{ if $paginator.HasPrev }}
+          <a rel="nofollow" class="btn btn-outline BtnGroup-item" href="{{ $paginator.Prev.URL }}">Previous</a>
           {{ else }}
           <button class="btn btn-outline BtnGroup-item" disabled="disabled">Previous</button>
           {{ end }}
-          {{ if .Paginator.HasNext }}
-          <a rel="nofollow" class="btn btn-outline BtnGroup-item" href="{{ .Paginator.Next.URL }}">Next</a>
+          {{ if $paginator.HasNext }}
+          <a rel="nofollow" class="btn btn-outline BtnGroup-item" href="{{ $paginator.Next.URL }}">Next</a>
           {{ else }}
           <button class="btn btn-outline BtnGroup-item" disabled="disabled">Next</button>
           {{ end }}
