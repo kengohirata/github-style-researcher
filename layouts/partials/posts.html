@@ -10,7 +10,7 @@
           for <strong>{{ .Title }}</strong>
         </div>
         <div class="TableObject-item text-right v-align-top">
-          <a class="issues-reset-query text-normal d-inline-block ml-3" href="{{ .Site.BaseURL }}/post/">
+          <a class="issues-reset-query text-normal d-inline-block ml-3" href="{{ "post/" | relURL }}">
             <svg class="octicon octicon-x issues-reset-query-icon mt-1" viewBox="0 0 16 16" version="1.1" width="16"
               height="16">
               <path fill-rule="evenodd"
@@ -32,7 +32,7 @@
           <div class="col-12 d-inline-block">
             <div class="d-inline-block">
               <h3 class="wb-break-all">
-                <a href="{{ .Permalink }}">{{ .Title }}</a>
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
               </h3>
             </div>
             {{ $firsts := .Params.first_authors }}

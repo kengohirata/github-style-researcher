@@ -6,7 +6,7 @@
           <div class="flex-auto min-width-0 width-fit mr-3">
             <div class="d-flex">
               <div class="d-none d-md-block">
-                <a class="avatar mr-2 flex-shrink-0" href="{{ .Site.BaseURL }}">
+                <a class="avatar mr-2 flex-shrink-0" href="{{ .Site.Home.RelPermalink }}">
                   <img class=" avatar-user"
                     src="{{ with $.Site.Params.avatar }}{{ $.Site.Params.avatar }}{{ else }}{{ "images/avatar.png" | absURL }}{{ end }}"
                     width="32" height="32"></a>
@@ -14,11 +14,11 @@
               <div class="d-flex flex-column">
                 <h1 class="break-word f3 text-normal mb-md-0 mb-1">
                   <span class="author">
-                    <a href="{{ .Site.BaseURL }}">{{ .Site.Params.author }}</a>
+                    <a href="{{ .Site.Home.RelPermalink }}">{{ .Site.Params.author }}</a>
                   </span>
                   <span class="path-divider">/</span>
                   <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
-                    <a href="{{ .Permalink }}">{{ .Title }}</a>
+                    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
                   </strong>
                 </h1>
                 <div class="note m-0">
